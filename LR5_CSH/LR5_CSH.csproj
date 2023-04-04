@@ -60,8 +60,10 @@
     </Compile>
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Factory.cs" />
+    <Compile Include="Models\Furniture.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XMLSerializationDeserialization.cs" />
     <EmbeddedResource Include="DialogFormTimePeriodPicker.resx">
       <DependentUpon>DialogFormTimePeriodPicker.cs</DependentUpon>
     </EmbeddedResource>
