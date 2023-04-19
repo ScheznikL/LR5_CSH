@@ -1,40 +1,29 @@
-﻿using System;
-using LR5_CSH.Models;
-using System.Collections.Generic;
+﻿using LR5_CSH.Models;
+using System;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace LR5_CSH
 {
     public partial class Form1 : Form
     {
-        struct DataParameter
-        {
-            public int Process;
-            public int Delay;
-        }
-        private DataParameter _inputparameter;
-        private BindingSource _source;
-        private Thread _startDepartments, _openSellings;
-        private delegate Action SafeCallDelegate(int value/*string text*/);
+        private int _initResourses;
+        private DilogFormGetInfo _newForm;
+        private Thread _startDepartments, _openSellings, _restore;
         public Form1()
         {
             InitializeComponent();
             lbForStatus.Text = "";
-            lbAboutOpenSelling.Visible = false;
-            _source = new BindingSource();
-            _source.DataSource = Factory.DepartmentsList;
+            lbRestoreStat.Text = "";
+            lbSelingStat.Text = "";
+            btOpenSellings.Enabled = false;
             nUDNumOfDailyProd.Enabled = false;
-            //            prBResourses.DataBindings.Add("Value", source, "AmountOfResourses");
-            //nUDNumOfDailyProd.DataBindings.Add("Value", source, "AmountOfResourses");
-            lbForResourses.DataBindings.Add("Text", _source, "AmountOfResourses");
+            lbAboutOpenSelling.Visible = false;
         }
-
         private void btStart_Click(object sender, EventArgs e)
         {
             if (nUDNumOfDepartm.Value == 0)
@@ -48,112 +37,177 @@ namespace LR5_CSH
             else
             {
                 lbForStatus.Text = "Factry started";
-                //Factory.StartAllDepartmentsThread();
                 var factory = new Factory((int)nUDNumOfDepartm.Value, (int)nUDNumOfWorkers.Value);
                 _startDepartments = new Thread(StartAllDepartmentsThread);
-                //StartDepartments.IsBackground = true;
-
-                _startDepartments.Start(/*factory*/);
-                //StartDepartments.Join();
-                /**********NEW**************/
-                _inputparameter.Delay = 10;
-                _inputparameter.Process = 1200;
-                // backgroundWorker.RunWorkerAsync(_inputparameter);
-                // lbForResourses.Text = (--Factory.TotalAmountOfResourses).ToString();
-
+                // _startDepartments.IsBackground = true;
+                _startDepartments.Start();
+                _openSellings = new Thread(SellingThread);
+                _openSellings.IsBackground = true;
+                _restore = new Thread(RestoreResoursesAndPayments);
+                _restore.IsBackground = true;
+                TurnOffOnNumericUpDowns(false);
+                nUDNumOfDailyProd.Maximum = Factory.TotalAmountOfResourses;
+                _initResourses = Factory.TotalAmountOfResourses;
+                prBResourses.Maximum = Factory.TotalAmountOfResourses;
+                btOpenSellings.Enabled = true;
+                prBResourses.Value = Factory.TotalAmountOfResourses;
+                btStart.Enabled = false;
             }
-
         }
         public void StartAllDepartmentsThread()
         {
-            //var localFactory = factory as Factory;
-
-            for (/*var resourse = 0*/; Factory.TotalAmountOfResourses > 0; /*Factory.TotalAmountOfResourses--*/)
+            for (int i = 0; i < Factory.NumberOfDepartments; i++)
             {
-                var dep = new Department(Factory.NumberOfWorkersInOneDepartment,
-                    Factory.NumberOfDepartments * Factory.NumberOfWorkersInOneDepartment);
-                dep.Produce();
-                Factory.DepartmentsList.Add(dep);
+                var dep = new Department(Factory.NumberOfWorkersInOneDepartment, this);
+                lock (Factory.Locker)
+                {
+                    Factory.DepartmentsList.Add(dep);
+                }
                 UpdateResoursesLable(Factory.TotalAmountOfResourses);
+                UpdateDailyProductAmount(Department.DailyProductAmount);
+            }
+            StartworkInAllDepartments();
+        }
+        public void StartworkInAllDepartments()
+        {
+            while (Factory.TotalAmountOfResourses > 0)
+            {
+                foreach (var dep in Factory.DepartmentsList)
+                {
+                    dep.AmountOfResourses = Factory.TotalAmountOfResourses / Factory.NumberOfDepartments;
+                    dep.Produce();
+                    UpdateResoursesLable(Factory.TotalAmountOfResourses);
+                    UpdateDailyProductAmount(Department.DailyProductAmount);
+                    if (!_openSellings.IsAlive)
+                    {
+                        UpdateProductAmount(Department.DailyProductAmount);
+                    }
+                }
                 Thread.Sleep(10);
             }
-        }
-        private void UpdateResoursesLable(int value/*string text*/)
-        {
-            if (lbForResourses.InvokeRequired)
+            if (_openSellings.IsAlive)
             {
-                lbForResourses.Invoke(new Action<int>(UpdateResoursesLable), value);
-                //var d = new SafeCallDelegate(WriteTextSafe);
-                //lbForResourses.Invoke(d, new object[] { text });
+                _restore?.Start();
+            }
+        }
+        private void SellingThread(object arg)
+        {
+            UpdateSelingStatusLabel("Selling started");
+            var period = (int)arg;
+
+            for (var i = 0; i < Factory.DepartmentsList.Count; i++)
+            {
+                var dep = Factory.DepartmentsList[i];
+                SellAllChairs(period, dep);
+                SellAllTables(period, dep);
+            }
+            if (!_restore.IsAlive && Factory.TotalAmountOfResourses <= 0)
+            {
+                if (_restore.ThreadState == System.Threading.ThreadState.Stopped)
+                {
+                    _restore = new Thread(RestoreResoursesAndPayments);
+                    _restore.IsBackground = true;
+                    _restore.Start();
+                }
+                else
+                {
+                    _restore.Start();
+                }
+            }
+            if (_startDepartments.IsAlive || Factory.GetCurrentNumbOfFurniture() > 0)
+            {
+                SellingThread(arg);
+            }
+            UpdateSelingStatusLabel("Selling ended");
+
+        }
+        private void SellAllChairs(int period, Department dep)
+        {
+            var numberOfChairs = dep.DailyProductAmountList.Where(x => x.Name == "chairs").Select(y => y.Amount).Sum();
+            for (; numberOfChairs > 0; numberOfChairs--)
+            {
+                lock (Factory.BankLocker)
+                {
+                    Factory.BankAccount += 40;
+                }
+                UpdateBankAccountLable(Factory.BankAccount);
+                UpdateProductAmount(Factory.GetCurrentNumbOfFurniture() - numberOfChairs);
+                Thread.Sleep(period);
+            }
+            lock (dep.Locker)
+            {
+                dep.DailyProductAmountList.RemoveAll(x => x.Name == "chairs");
+            }
+            UpdateProductAmount(Factory.GetCurrentNumbOfFurniture());
+        }
+        private void SellAllTables(int period, Department dep)
+        {
+            var numberOfTables = dep.DailyProductAmountList.Where(x => x.Name == "tables").Select(y => y.Amount).Sum();
+            for (; numberOfTables > 0; numberOfTables--)
+            {
+                lock (Factory.BankLocker)
+                {
+                    Factory.BankAccount += 50;
+                }
+                UpdateBankAccountLable(Factory.BankAccount);
+                UpdateProductAmount(Factory.GetCurrentNumbOfFurniture() - numberOfTables);
+                Thread.Sleep(period);
+            }
+            lock (dep.Locker)
+            {
+                dep.DailyProductAmountList.RemoveAll(x => x.Name == "tables");
+            }
+            UpdateProductAmount(Factory.GetCurrentNumbOfFurniture());
+        }
+        public void RestoreResoursesAndPayments()
+        {
+            UpdateRestoreStatusLabel("Restorstoring begun");
+            for (var i = Factory.DepartmentsList.Count - 1; i > 0 && Factory.BankAccount > 0; --i)
+            {
+                lock (Factory.BankLocker)
+                {
+                    Factory.BankAccount -= Factory.NumberOfWorkersInOneDepartment * Factory.DepartmentsList[i].Payment;
+                }
+                UpdateBankAccountLable(Factory.BankAccount);
+                Factory.SpenOnPayment += Factory.NumberOfWorkersInOneDepartment * Factory.DepartmentsList[i].Payment;
+
+                UpdateSpendingLable(Factory.SpenOnPayment);
+                Thread.Sleep(10);
+            }
+            while (Factory.BankAccount > 0)
+            {
+                lock (Factory.BankLocker)
+                {
+                    Factory.BankAccount -= Factory.CommonResousesPrice;
+                }
+                UpdateBankAccountLable(Factory.BankAccount);
+                lock (Factory.Locker)
+                {
+                    Factory.TotalAmountOfResourses++;
+                }
+                UpdateProgressBar(Factory.TotalAmountOfResourses);
+                if (Factory.TotalAmountOfResourses >= 3) Factory.FillDepartmentsWithResourses();
+                UpdateResoursesLable(Factory.TotalAmountOfResourses);
+            }
+            UpdateRestoreStatusLabel("Restorstoring ended");
+            if (MessageBox.Show("Resourses were restored.\nDo you want to save factory state and restat all departments ?", "Message",
+                MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                EventArgs e = new EventArgs();
+                object sender = new Factory();
+                btStop_Click(sender, e);
             }
             else
             {
-                //source.ResetBindings(true);
-                lbForResourses.Text = value.ToString();
+                SerializeableXML.SerializeFactoryLog(FileDialogOpenSave.FileSaveToLog());
             }
         }
-        #region /*********************************/
-
-        //private void btStart_Click(object sender, EventArgs e)
-        //{
-        //    Thread thread2 = new Thread(new ThreadStart(SetText));
-        //    thread2.Start();
-        //    Thread.Sleep(1000);
-        //}
-
-
-        private void SetText()
-        {
-            //WriteTextSafe("This text was set safely.");
-        }
-        #endregion /**************************************************************/
-
-        private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            prBResourses.Value = e.ProgressPercentage;
-            // lbForResourses.Text = $"Processing resourses...{e.ProgressPercentage}%";
-            prBResourses.Update();
-        }
-        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            int process = ((DataParameter)e.Argument).Process;
-            int delay = ((DataParameter)e.Argument).Delay;
-            int index = 1;
-            try
-            {
-                for (int i = 0; i < process; i++)
-                {
-                    if (!backgroundWorker.CancellationPending)
-                    {
-                        backgroundWorker.ReportProgress(index++ * 100 / process, string.Format("Process data {0}", i));
-                        //Thread.Sleep(delay); //used to simulate length of operation
-                        //Add your code here
-
-                        Factory.NumberOfDepartments = (int)nUDNumOfDepartm.Value;
-                        Factory.NumberOfWorkersInOneDepartment = (int)nUDNumOfWorkers.Value;
-                        _startDepartments = new Thread(Factory.StartAllDepartmentsThread);
-                        _startDepartments.Start(/*new Factory((int)nUDNumOfDepartm.Value, (int)nUDNumOfWorkers.Value)*/);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                backgroundWorker.CancelAsync();
-                MessageBox.Show(ex.Message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            MessageBox.Show("Process has been completed.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
         private void btOpenSellings_Click(object sender, EventArgs e)
         {
             mTBSellingTime.Enabled = true;
-            lbAboutOpenSelling.Visible = true;            
-            
-            if (string.IsNullOrEmpty(mTBSellingTime.Text) || mTBSellingTime.Text  == "  :")
+            lbAboutOpenSelling.Visible = true;
+
+            if (string.IsNullOrEmpty(mTBSellingTime.Text) || mTBSellingTime.Text == "  :")
             {
                 MessageBox.Show("Set a selling period", "Period", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -162,48 +216,129 @@ namespace LR5_CSH
             {
                 var sellingPeriod = mTBSellingTime.Text.Trim();
                 var timeForSleep = mTBSellingTime.Text.Split(':');
-                int min = Convert.ToInt32(timeForSleep[0]) * 60000;
-                int sec = Convert.ToInt32(timeForSleep[1]) * 1000;
-
+                var sec = Convert.ToInt32(timeForSleep[0]) * 1000;
+                var msec = Convert.ToInt32(timeForSleep[1]);
                 _openSellings = new Thread(SellingThread);
-                _openSellings.Start(min + sec);
-            }
-        }
-        private void SellingThread(object arg)
-        {
-            var period = (int)arg;
-            if (_startDepartments.IsAlive)
-            {
 
+                _openSellings.IsBackground = true;
+                _openSellings.Start(msec + sec);
             }
-            foreach (var dep in Factory.DepartmentsList)
-            {
-                SellAllChairs(period, dep);                
-                SellAllTables(period, dep);
-            }
-
         }
-        private void SellAllChairs(int period, Department dep)
+        private void btStop_Click(object sender, EventArgs e)
         {
-            var numberOfChairs = dep.DailyProductAmount.Where(x => x.Name == "chairs").Count();
-            for (; numberOfChairs > 0; numberOfChairs--)
+            if (Factory.DepartmentsList.Count > 0)
             {
-                Factory.BankAccount += 40;
-                UpdateBankAccountLable(Factory.BankAccount);
-                Thread.Sleep(period);
+                if (sender is Factory)
+                {
+                    if (SerializeableXML.SerializeFactoryLog(FileDialogOpenSave.FileSaveToLog()))
+                    {
+                        _startDepartments = new Thread(StartworkInAllDepartments);
+                        _startDepartments.IsBackground = true;
+                        _startDepartments.Start();
+                    }
+                }
+                else
+                {
+                    SerializeableXML.SerializeFactoryLog(FileDialogOpenSave.FileSaveToLog());
+                    if (MessageBox.Show("Do you want to save factory state and restart all departments ?", "Message",
+                    MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        _startDepartments?.Abort();
+                        _openSellings?.Abort();
+                        _restore?.Abort();
+                        Factory.DepartmentsList.Clear();
+                        ResetUIElements();
+                        btStart_Click(sender, e);
+                    }
+                }
             }
-            dep.DailyProductAmount.RemoveAll(x => x.Name == "chairs");
+            else MessageBox.Show("There is nothing to stop yet.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
-        private void SellAllTables(int period, Department dep)
+        private void btOpenLog_Click(object sender, EventArgs e)
         {
-            var numberOfTables = dep.DailyProductAmount.Where(x => x.Name == "tables").Count();
-            for (; numberOfTables > 0; numberOfTables--)
+            Process.Start("notepad++.exe", FileDialogOpenSave.FileDialogOpenFromInSeparateThread());
+        }
+        private void btInfo_Click(object sender, EventArgs e)
+        {
+            _newForm = new DilogFormGetInfo();
+            _newForm.Show();
+        }
+        private void ResetUIElements()
+        {
+            Thread.Sleep(15);
+            nUDNumOfDepartm.Value = 0;
+            nUDNumOfWorkers.Value = 0;
+            nUDNumOfDailyProd.Value = 0;
+            TurnOffOnNumericUpDowns(true);
+            mTBSellingTime.Clear();
+            lbForStatus.Text = "";
+            lbRestoreStat.Text = "";
+            lbSelingStat.Text = "";
+            UpdateProductAmount(0);
+            UpdateResoursesLable(0);
+            UpdateBankAccountLable(0);
+            lbSpentOnPayment.Text = "0";
+            lbAboutOpenSelling.Visible = false;
+            btOpenSellings.Enabled = false;
+            btStart.Enabled = true;
+        }
+        private void TurnOffOnNumericUpDowns(bool sideON)
+        {
+            if (sideON)
             {
-                Factory.BankAccount += 50;
-                UpdateBankAccountLable(Factory.BankAccount);
-                Thread.Sleep(period);
+                nUDNumOfDepartm.Enabled = true;
+                nUDNumOfWorkers.Enabled = true;
             }
-            dep.DailyProductAmount.RemoveAll(x => x.Name == "tables");
+            else
+            {
+                nUDNumOfDepartm.Enabled = false;
+                nUDNumOfWorkers.Enabled = false;
+            }
+        }
+        public void UpdateProgressBar(int value)
+        {
+            if (prBResourses.InvokeRequired)
+            {
+                prBResourses.Invoke(new Action<int>(UpdateProgressBar), value);
+            }
+            else
+            {
+                prBResourses.Value = value;
+            }
+        }
+        private void UpdateResoursesLable(int value)
+        {
+            if (lbForResourses.InvokeRequired)
+            {
+                lbForResourses.Invoke(new Action<int>(UpdateResoursesLable), value);
+            }
+            else
+            {
+                lbForResourses.Text = $@"{value.ToString()}/{_initResourses}";
+                _newForm?.UpdateDataGridView();
+            }
+        }
+        private void UpdateSelingStatusLabel(string value)
+        {
+            if (lbSelingStat.InvokeRequired)
+            {
+                lbSelingStat.Invoke(new Action<string>(UpdateSelingStatusLabel), value);
+            }
+            else
+            {
+                lbSelingStat.Text = value;
+            }
+        }
+        private void UpdateRestoreStatusLabel(string value)
+        {
+            if (lbRestoreStat.InvokeRequired)
+            {
+                lbRestoreStat.Invoke(new Action<string>(UpdateRestoreStatusLabel), value);
+            }
+            else
+            {
+                lbRestoreStat.Text = value;
+            }
         }
         private void UpdateBankAccountLable(int value)
         {
@@ -216,7 +351,18 @@ namespace LR5_CSH
                 lbForBankAccount.Text = value.ToString();
             }
         }
-        private void UpdateDailyProductAmount(decimal value) //TODO implenemt ~~ this
+        private void UpdateSpendingLable(int value)
+        {
+            if (lbSpentOnPayment.InvokeRequired)
+            {
+                lbSpentOnPayment.Invoke(new Action<int>(UpdateSpendingLable), value);
+            }
+            else
+            {
+                lbSpentOnPayment.Text = value.ToString();
+            }
+        }
+        private void UpdateDailyProductAmount(decimal value)
         {
             if (nUDNumOfDailyProd.InvokeRequired)
             {
@@ -227,18 +373,17 @@ namespace LR5_CSH
                 nUDNumOfDailyProd.Value = value;
             }
         }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void UpdateProductAmount(int value)
         {
-            if (backgroundWorker.IsBusy)
-                backgroundWorker.CancelAsync();
-
-            if (_startDepartments != null && _startDepartments.IsAlive)
-                _startDepartments.Abort();//!!!
-            if (_openSellings != null && _openSellings.IsAlive)
-                _openSellings.Abort();//!!!
+            if (lbCurrentProdNum.InvokeRequired)
+            {
+                lbCurrentProdNum.Invoke(new Action<int>(UpdateProductAmount), value);
+            }
+            else
+            {
+                lbCurrentProdNum.Text = value.ToString();
+            }
         }
-
     }
 }
 

@@ -1,68 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Xml.Serialization;
 using System.Threading;
 
 namespace LR5_CSH.Models
 {
-    class Factory
+    [Serializable]
+    public class Factory
     {
+        private static int _bankAccount;
+        private static int _totalAmountOfResourses;
+        private Random _randomPriceChooser = new Random();
         public static int NumberOfWorkersInOneDepartment { set; get; }
         public static int NumberOfDepartments { get; set; }
-        public static int BankAccount { get; set; } 
+        public static int BankAccount
+        {
+            get => _bankAccount;
+            set { if (value >= 0) _bankAccount = value; }
+        }
         public static List<Department> DepartmentsList { get; set; } = new List<Department>();
-        public static int TotalAmountOfResourses { get; set; }
+        public static int TotalAmountOfResourses
+        {
+            get => _totalAmountOfResourses;
+            set { if (value >= 0) _totalAmountOfResourses = value; }
+        }
+        public static int CommonResousesPrice { get; set; }
+        public static int SpenOnPayment { get; set; }
+        public static object Locker { get; } = new object();
+        public static object BankLocker { get; } = new object();
 
-
+        public Factory() { }
         public Factory(int numberOfDepartments, int setNumberOfWorkersInOneDepartment, int bankAccount = 0)
         {
             NumberOfDepartments = numberOfDepartments;
             BankAccount = bankAccount;
             NumberOfWorkersInOneDepartment = setNumberOfWorkersInOneDepartment;
             TotalAmountOfResourses = setNumberOfWorkersInOneDepartment * 1000 * NumberOfDepartments;
-            // StartAllDepartments(NumberOfDepartments, setNumberOfWorkersInOneDepartment);
+            CommonResousesPrice = _randomPriceChooser.Next(1, 3);
         }
-
-        public void StartAllDepartments(int setNumberOfDepartments, int setNumberOfWorkersInOneDepartment)
+        public static int GetCurrentNumbOfFurniture()
         {
-            //var startThread = new Thread(StartAllDepartmentsThread);
-            //startThread.Name = "StartDepartments";
-            ///TODO thread1 starts all deps and they work to the point NoResourses 
-            ///meanwhile stack the departments with resourses
-            //startThread.Start(this);
-            //startThread.Join();
-        }
-        public static void StartAllDepartmentsThread()
-        {
-            //var localFactory = factory as Factory;
-
-            for (var i = 0; i < NumberOfDepartments; i++)
+            int currentNumOfProd = 0;
+            foreach (var dep in DepartmentsList)
             {
-                var dep = new Department(NumberOfWorkersInOneDepartment, NumberOfDepartments * NumberOfWorkersInOneDepartment);
-                dep.Produce();
-                DepartmentsList.Add(dep);
-                Thread.Sleep(10);
+                lock (dep.Locker)
+                {
+                    currentNumOfProd += dep.DailyProductAmountList.Select(y => y.Amount).Sum();
+                }
+            }
+            return currentNumOfProd;
+        }
+        public static void FillDepartmentsWithResourses()
+        {
+            foreach (var dep in DepartmentsList)
+            {
+                dep.AmountOfResourses = TotalAmountOfResourses / NumberOfDepartments;
             }
         }
-
-        public void Selling(int periodOfPurchases)
-        {
-            //TODO thread2 periodicly sleep(??period) //ind a Day lasting**
-            ///numbers od product --
-            ///money++ tobank
-            BankAccount += 10;
-        }
-        public void MoneyWithdrawal()
-        {
-            //TODO thread3 RestoreResourses + MoneyToTheWorkers(*!*priorityhigher*!*)
-
-        }
-        private void PriceGeneration()
-        {
-
-        }
-        //TODO log XML
 
     }
 }
