@@ -33,7 +33,6 @@ namespace LR5_CSH
         public static string FileSaveToLog()
         {
             string datePatt = @"dd/mm/yyyy_HH_mm_ss";
-
             string filePath = string.Empty;
             try
             {

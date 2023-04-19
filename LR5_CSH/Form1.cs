@@ -281,6 +281,7 @@ namespace LR5_CSH
             lbAboutOpenSelling.Visible = false;
             btOpenSellings.Enabled = false;
             btStart.Enabled = true;
+            prBResourses.Value = 0;
         }
         private void TurnOffOnNumericUpDowns(bool sideON)
         {

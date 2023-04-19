@@ -241,7 +241,7 @@
             this.btStop.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Window;
             this.btStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btStop.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btStop.Location = new System.Drawing.Point(475, 201);
+            this.btStop.Location = new System.Drawing.Point(458, 177);
             this.btStop.Name = "btStop";
             this.btStop.Size = new System.Drawing.Size(62, 46);
             this.btStop.TabIndex = 6;
@@ -307,7 +307,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label7.Location = new System.Drawing.Point(189, 84);
+            this.label7.Location = new System.Drawing.Point(211, 86);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(21, 17);
             this.label7.TabIndex = 10;
@@ -316,7 +316,7 @@
             // lbForBankAccount
             // 
             this.lbForBankAccount.AutoSize = true;
-            this.lbForBankAccount.Location = new System.Drawing.Point(113, 85);
+            this.lbForBankAccount.Location = new System.Drawing.Point(135, 87);
             this.lbForBankAccount.Name = "lbForBankAccount";
             this.lbForBankAccount.Size = new System.Drawing.Size(14, 14);
             this.lbForBankAccount.TabIndex = 9;
@@ -325,7 +325,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(17, 85);
+            this.label8.Location = new System.Drawing.Point(39, 87);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(81, 14);
             this.label8.TabIndex = 8;
@@ -348,7 +348,6 @@
             this.panel4.Controls.Add(this.label12);
             this.panel4.Controls.Add(this.lbCurrentProdNum);
             this.panel4.Controls.Add(this.label11);
-            this.panel4.Controls.Add(this.btOpenLog);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel4.Location = new System.Drawing.Point(260, 0);
             this.panel4.Name = "panel4";
@@ -359,9 +358,9 @@
             // 
             this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox2.Location = new System.Drawing.Point(243, 3);
+            this.pictureBox2.Location = new System.Drawing.Point(236, -1);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(33, 44);
+            this.pictureBox2.Size = new System.Drawing.Size(39, 44);
             this.pictureBox2.TabIndex = 13;
             this.pictureBox2.TabStop = false;
             // 
@@ -370,7 +369,7 @@
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.Color.Orange;
-            this.label13.Location = new System.Drawing.Point(211, 52);
+            this.label13.Location = new System.Drawing.Point(194, 85);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(21, 17);
             this.label13.TabIndex = 14;
@@ -379,7 +378,7 @@
             // lbSpentOnPayment
             // 
             this.lbSpentOnPayment.AutoSize = true;
-            this.lbSpentOnPayment.Location = new System.Drawing.Point(149, 53);
+            this.lbSpentOnPayment.Location = new System.Drawing.Point(132, 86);
             this.lbSpentOnPayment.Name = "lbSpentOnPayment";
             this.lbSpentOnPayment.Size = new System.Drawing.Size(14, 14);
             this.lbSpentOnPayment.TabIndex = 13;
@@ -388,7 +387,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(27, 53);
+            this.label12.Location = new System.Drawing.Point(10, 86);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(110, 14);
             this.label12.TabIndex = 12;
@@ -397,7 +396,7 @@
             // lbCurrentProdNum
             // 
             this.lbCurrentProdNum.AutoSize = true;
-            this.lbCurrentProdNum.Location = new System.Drawing.Point(194, 23);
+            this.lbCurrentProdNum.Location = new System.Drawing.Point(177, 22);
             this.lbCurrentProdNum.Name = "lbCurrentProdNum";
             this.lbCurrentProdNum.Size = new System.Drawing.Size(14, 14);
             this.lbCurrentProdNum.TabIndex = 11;
@@ -406,7 +405,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(27, 23);
+            this.label11.Location = new System.Drawing.Point(10, 22);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(161, 14);
             this.label11.TabIndex = 10;
@@ -418,7 +417,7 @@
             this.btOpenLog.BackColor = System.Drawing.Color.PaleTurquoise;
             this.btOpenLog.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btOpenLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btOpenLog.Location = new System.Drawing.Point(177, 87);
+            this.btOpenLog.Location = new System.Drawing.Point(441, 224);
             this.btOpenLog.Name = "btOpenLog";
             this.btOpenLog.Size = new System.Drawing.Size(99, 35);
             this.btOpenLog.TabIndex = 7;
@@ -507,6 +506,7 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.btStop);
             this.Controls.Add(this.btStart);
+            this.Controls.Add(this.btOpenLog);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.pNumberOfDepartments);

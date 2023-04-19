@@ -121,7 +121,7 @@
   <data name="btStop.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACRXR/mAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADr8AAA6/ATgFUyQAAAGfSURBVFhH7ZY5dsMwDERzg5RpUub+bU6VMziwMYYhbKQW
+        YQUAAAAJcEhZcwAADr4AAA6+AepCscAAAAGfSURBVFhH7ZY5dsMwDERzg5RpUub+bU6VMziwMYYhbKQW
         Si447zemAMwv/XHbkb/vnwIMbcpqLV38+/lVoCex3J0VWtJh6pvIIg51pEtL7pq+VcgRHC3T0JJbpkOQ
         AY+ZZOQrCpJUWtl1Od2JWSf4HTVRUq3wIj9uIzyFMpdAqz60k/AgilVSrXD/EPxlFKtYrWzzWPx91D+z
         0Mp2RuBbIPHISyubHofvgkqhxT9HY+qgIlpmSOZOwDSyT6zFP89BSqUXWuYz/zwTU/3GWuGH8zECU6vE
@@ -129,6 +129,73 @@
         sg+0KOHQaKSOG6FSaPHcUHwXVLQWJZsegW+BxCMLLUq2cyz+PuqfsVqUbPMo/GUUq6Ra4f5+wpsoVgm0
         OP6KPrSB8BTKXFItSniO4Pd+zDrB76iJUmlRitOEfA0xwwJ/RUGShhanrumnR4jTpcXhoxv8ZBGHOrJC
         iyMdhKk36Eksd2e1lo4u9mBoQ263fzXJbQcsw9WWAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="pictureBox2.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        Qk2ODgAAAAAAADYAAAAoAAAAIwAAACIAAAABABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAESE3AAAA
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////AAAAAAAAAAAA////////////////AAAAESE3AAAA////////////////
+        ////////////////////////////////////////////////////////////FQCIFQCIFQCI////////
+        ////bavgYaTd////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////////////
+        ////////////////////////////////////////////////Fh8y////////////////////////AAAA
+        AAAAAAAA////////////AAAAAAAA////////////AAAAAAAA////////////////////////////////
+        ////////////////////////////////Fh8y////////////////////SJbYAAAAAAAAAAAA////////
+        ////AAAAESE3////////AAAAAAAA////////////////////////////////////////////////////
+        ////////////////Fh8y////////////////////YaTdPI/VAAAAAAAAAAAA////////AAAAESE3////
+        ////AAAAFh8y////////FQCIFQCIFQCI////////////////////////////////////////////////
+        Fh8yFQCIFQCIFQCI////////////////YaTdPI/VAAAA////////AAAAESE3////////AAAAAAAA////
+        ////////Fh8y////////////////////////////////////////////////////Fh8y////Fh8y////
+        ////////////////////PI/VAAAAVZ3aAAAAAAAAAAAAAAAA////////AAAA////////////AAAA////
+        ////////////////////////////////////////////////Fh8y////Fh8y////////////////////
+        ////AAAAAAAAYaTdOIbIAAAAESE3ESE3ESE3ESE3ESE3ESE3ESE3AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA////2ur3
+        MXStAAAAESE3ESE3sOTvV3q5V3q5V3q5SoTGPI/VPI/VPI/VPI/VR4fJV3q5fKXPsOTvsOTvsOTvsOTv
+        sOTvsOTvsOTvsOTvebzjPI/VPI/VPI/VPI/VPI/VPI/VPI/VPI/VJFV+////SJbYBAkNAAAA////ESE3
+        sOTvV3q5V3q5V3q5QIzRPI/VPI/VPI/VPI/VPY/UV3q5V3q5sOTvWaTcPI/VQ5TXsOXvsOTvebzjPI/V
+        PI/VPI/VPI/VPI/VPI/VPI/VPI/VPI/VPI/VQJLVAAAAPI/VAAAAAAAA////ESE3ESE3sOTvsOTvV3q5
+        T4DBQIzRPI/VPI/VQIzRTYLDV3q5V3q5V3q5V3q5V3q5QYvQPI/VPI/VPI/VPI/VPI/VPI/VPI/VPI/V
+        PI/VPI/VPI/VPI/VS5rYRpbXAAAAYaTdOIbIAAAA////////ESE3sOTvsOTvV3q5V3q5V3q5V3q5V3q5
+        Wn26j73bsOTvsOTvsOTvsOTvsOTvsOTvjLnZV3q5T4DBQIzRPI/VQIzRTYLDV3q5V3q5V3q5YojAj7za
+        sOTvPY/VAAAA////PI/VAAAA////////ESE3ESE3sOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTv
+        sOTvsOTvsOTvsOTvruHuV3q5V3q5V3q5V3q5V3q5YojAj7zasOTvsOTvsOTvsOTvsOTvPI/VOIbI////
+        PI/VAAAA////////////ESE3sOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvebvjPI/VsOTvsOTvsOXv
+        sOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvPI/VPI/VAAAAJlmFAAAA////////
+        ////ESE3ESE3ESE3sOTvsOXvsOTvsOTvsOTvqdzrfKXPTYHDSoTGV3q5V3q5V3q5V3q5V3q5fKXPsOTv
+        sOTvsOTvsOTvsOTvsOTvsOTvsOTvseTvsOTvPI/VPI/VAAAAAAAAAAAA////////////////ESE3ESE3
+        hrLWV3q5SoTGPI/VV3q5V3q5V3q5V3q5V3q5V3q5V3q5V3q5V3q5V3q5V3q5V3q5V3q5Vnq6R4fLPI/V
+        PI/VR4fJV3q5qNrqsOTvUp/aP5HWaYeOAAAAAAAA////////////////ESE3ESE3ESE3V3q5TYHDSoTG
+        V3q5V3q5V3q5V3q5V3q5V3q5V3q5V3q5V3q5V3q5V3q5V3q5SoTGPI/VPI/VPI/VPI/VPY/UV3q5cJjI
+        qt7ssOTvUp/aQ5TXAAAAAAAA////////////////////ESE3ESE3YojAV3q5V3q5V3q5YojAi7nZsOTv
+        sOTvsOTvsOTvlsbgYojAV3q5V3q5V3q5QIzRPI/VPI/VPI/VQIzRTYLDV3q5V3q5SZHSPI/VPI/VUp/a
+        AAAAAAAA////////////////////ESE3ESE3ESE3ESE3ESE3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA////////
+        ////////////////////////////////Fh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8y
+        Fh8yFh8yFh8y////////////////////////////////////////AAAA////////////////////////
+        ////////////////AAAA////AAAA////////AAAAAAAAAAAAAAAAAAAA////////AAAA////AAAA////
+        ////////////////////////////////////AAAA////////////////////////////////////////
+        Fh8yAAAAAAAA////AAAAAAAA////AAAA////AAAAAAAA////AAAAAAAAFh8y////////////////////
+        ////////////////////AAAA////////////////////////////////////////Fh8y////AAAA////
+        AAAA////////AAAA////////AAAA////AAAA////Fh8y////////////////////////////////////
+        ////AAAA////////////////////////////////////////Fh8yAAAAAAAA////AAAAAAAAAAAAAAAA
+        AAAAAAAAAAAA////AAAAAAAAFh8y////////////////////////////////////////AAAA////////
+        ////////////////////////////////Fh8y////////////AAAA////////AAAA////////AAAA////
+        ////////Fh8y////////////////////////////////////////AAAA////////////////////////
+        ////////////////Fh8yFh8y////////AAAA////////AAAA////////AAAA////////Fh8yFh8y////
+        ////////////////////////////////////AAAA////////////////////////////////////////
+        Fh8yAAAANEp1lcTalcTalcTasOTvsOTvsOTvsOTvsOTvsOTvkb7QAAAAFh8y////////////////////
+        ////////////////////AAAA////////////////////////////////////////Fh8yAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFh8y////////////////////////////////////
+        ////AAAA////////////////////////////////////////Fh8yYIOxRWKclcTalcTalcTasOTvsOTv
+        sOTvsOTvlcTalcTalcTaYIOxFh8y////////////////////////////////////////AAAA////////
+        ////////////////////////////////Fh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8y
+        Fh8yFh8yFh8y////////////////////////////////////////AAAA////////////////////////
+        ////////////////Fh8yYIOxRWKcRWKclcTaqdzqsOTvsOTvsOTvsOXvsOTvlcTaRWKcYIOxFh8y////
+        ////////////////////////////////////AAAA////////////////////////////////////////
+        Fh8yFh8yYIOxRWKcRWKcRWKclcTaqdzqsOTvnMvfRWKcRWKcWXusFh8yFh8y////////////////////
+        ////////////////////AAAA////////////////////////////////////////////Fh8yFh8yFh8y
+        Fh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8y////////////////////////////////////////
+        ////AAAA
 </value>
   </data>
   <data name="pictureBox1.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -194,45 +261,6 @@
         P0DndyHxYiGnTaTkEhVDjpXIlJDUKcFkSlkmhHYKJY/lyTk0qlW/v9DOqp/cRkLGrSd9f6ZMJ5erLNNN
         JDVgakRxZsiDqT4dNRjVjwt0nyHV9CADKehDh0D0CFKJAuIKDuIoeuK4lFUEEcFCDmj/B8Qr1dFPbiZy
         AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="pictureBox2.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        Qk0uCAAAAAAAADYAAAAoAAAAEwAAACIAAAABABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFh8y////
-        ////////////////////////////////////////////////////////Fh8y////////AAAAFh8y////
-        ////////////////////////////////////////////////////////Fh8y////////AAAAFh8y////
-        ////////////////////////////////////////////////////////Fh8y////////AAAAFh8y////
-        ////////////////////////////////////////////////////////Fh8y////////AAAAFh8y////
-        ////////////////////////////////////////////////////////Fh8y////////AAAAFh8y////
-        ////////////////////////////////////////////////////////Fh8y////////AAAAFh8y////
-        ////////Fh8y////////////////////////////////////////////Fh8y////Fh8yAAAAFh8y////
-        ////////P1qP////////////////////////////////////////////Fh8y////Fh8yAAAAFh8y////
-        ////////RWKc////////////////////////////////////////////Fh8y////Fh8yAAAAFh8y////
-        ////////RWKc////////////////////////////////////////////Fh8y////Fh8yAAAAFh8y////
-        ////////RWKc////////////////////////////////////////////Fh8y////Fh8yAAAAFh8y////
-        ////////M0l1////////////////////////////////////////////Fh8y////Fh8yAAAAFh8y////
-        ////////Fh8y////////////////////////////////////////////Fh8y////Fh8yAAAAFh8yFh8y
-        Fh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8y////Fh8yAAAAFh8yFh8y
-        YIOxRWKcTGuhRWKcRWKcYIOxYIOxTGuhRWKcYIOxYIOxRWKcYIOxFh8yFh8y////P1qPAAAAFh8yFh8y
-        Fh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yRWKcAAAA////AAAA
-        Fh8ysOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvFh8yFh8yRWKcAAAA////////
-        AAAAFh8ysOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvFh8yFh8yM0l1AAAA////////
-        AAAAFh8yAAAAsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvFh8yFh8yAAAA////////
-        ////AAAAFh8yFh8ysOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvsOTvFh8yFh8yAAAA////////
-        ////////Fh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yAAAA////////
-        ////////Fh8y////////////////////////////////////////////////////Fh8yAAAA////////
-        ////////Fh8y////////////////////////////////////////////////////Fh8yAAAA////////
-        ////////Fh8y////////////////////////////////////////////////////Fh8yAAAA////////
-        ////////Fh8y////////////////////////////////////////////////////Fh8yAAAA////////
-        ////////Fh8y////////////////////////////////////////////////////Fh8yAAAA////////
-        ////////Fh8yFh8y////////////////////////////////////////////Fh8yFh8yAAAA////////
-        ////////Fh8yAAAANEp1lcTalcTalcTasOTvsOTvsOTvsOTvsOTvsOTvkb7QAAAAFh8yAAAA////////
-        ////////Fh8yAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFh8yAAAA////////
-        ////////Fh8yYIOxRWKclcTalcTalcTasOTvsOTvsOTvsOTvlcTalcTalcTaYIOxFh8yAAAA////////
-        ////////Fh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yAAAA////////
-        ////////Fh8yYIOxRWKcRWKclcTaqdzqsOTvsOTvsOTvsOXvsOTvlcTaRWKcYIOxFh8yAAAA////////
-        ////////Fh8yFh8yYIOxRWKcRWKcRWKclcTaqdzqsOTvnMvfRWKcRWKcWXusFh8yFh8yAAAA////////
-        ////////////Fh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8yFh8y////AAAA
 </value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
