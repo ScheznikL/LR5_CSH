@@ -1,6 +1,5 @@
 ﻿using LR5_CSH.Models;
 using System;
-using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Threading;
@@ -39,7 +38,7 @@ namespace LR5_CSH
                 lbForStatus.Text = "Factry started";
                 var factory = new Factory((int)nUDNumOfDepartm.Value, (int)nUDNumOfWorkers.Value);
                 _startDepartments = new Thread(StartAllDepartmentsThread);
-                // _startDepartments.IsBackground = true;
+                 _startDepartments.IsBackground = true;
                 _startDepartments.Start();
                 _openSellings = new Thread(SellingThread);
                 _openSellings.IsBackground = true;
@@ -298,13 +297,20 @@ namespace LR5_CSH
         }
         public void UpdateProgressBar(int value)
         {
-            if (prBResourses.InvokeRequired)
+            try
             {
-                prBResourses.Invoke(new Action<int>(UpdateProgressBar), value);
+                if (prBResourses.InvokeRequired)
+                {
+                    prBResourses.Invoke(new Action<int>(UpdateProgressBar), value);
+                }
+                else
+                {
+                    prBResourses.Value = value;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                prBResourses.Value = value;
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
             }
         }
         private void UpdateResoursesLable(int value)

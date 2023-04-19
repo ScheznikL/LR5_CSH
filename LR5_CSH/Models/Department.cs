@@ -45,11 +45,21 @@ namespace LR5_CSH.Models
             NumberOfWorkers = numberOfWorkers;
             Id = ++_idCounter;
             Payment = GetRandomNumber(500, 900);
+            Thread.Sleep(5);
         }
 
         public int GetRandomNumber(int from, int to)
         {
-            _randNumbers.Add(_randomPaymentChooser.Next(from, to));
+            int tempRand;
+            lock (_randLocker)
+            {
+                tempRand = _randomPaymentChooser.Next(from, to);
+            }
+            if (!_randNumbers.Contains(tempRand))
+            {
+                _randNumbers.Add(_randomPaymentChooser.Next(from, to));
+            }
+            else GetRandomNumber(from,to);
             return _randNumbers.Last();
         }
         public void Produce()
